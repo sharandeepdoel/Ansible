@@ -10,15 +10,15 @@
     ios_interface:
      name: "{{item.name}}"
      description: "{{item.desc}}" 
-     state: absent 
+     state: present 
     
-  # - name: Setting ip address for loopbacks
-  #   with_items: "{{local_loopback}}" 
-  #   ios_config:
-  #     lines:
-  #       - description {{ item.desc }}
-  #       - ip address {{ item.ip_address }} {{ item.mask }}
-  #     parents: interface {{ item.name }}
+  - name: Setting ip address for loopbacks
+    with_items: "{{local_loopback}}" 
+    ios_config:
+      lines:
+        - description {{ item.desc }}
+        - ip address {{ item.ip_address }} {{ item.mask }}
+      parents: interface {{ item.name }}
        
   - name: show ip interface brief 
     ios_command:
