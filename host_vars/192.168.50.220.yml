@@ -1,0 +1,12 @@
+---
+    
+local_loopback:
+    - name: Loopback1
+      desc: Sample Ansible Config
+      ip_address: 8.8.8.8
+      mask: 255.255.255.0   
+    - name: Loopback2
+      desc: Sample Ansible Config
+      ip_address: 9.9.9.9
+      mask: 255.255.255.0     
+        

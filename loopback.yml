@@ -1,0 +1,58 @@
+---
+- name: Creating loopbacks configs
+  hosts: switch
+  connection: local
+  
+  
+  tasks:
+  - name: Add loopbacks
+    with_items: "{{local_loopback}}"
+    ios_interface:
+     name: "{{item.name}}"
+     description: "{{item.desc}}" 
+     state: absent 
+    
+  # - name: Setting ip address for loopbacks
+  #   with_items: "{{local_loopback}}" 
+  #   ios_config:
+  #     lines:
+  #       - description {{ item.desc }}
+  #       - ip address {{ item.ip_address }} {{ item.mask }}
+  #     parents: interface {{ item.name }}
+       
+  - name: show ip interface brief 
+    ios_command:
+     commands:
+      - show ip int brief
+    register: show_run
+
+  - debug:
+     var: show_run.stdout_lines
+
+ 
+  
+
+
+      
+    
+    
+   # - name: Create Loopbacks shell
+   #   with_items: "{{local_loopback}}"
+   #   nxos_interface:
+    #    interface: "{{item.name}}"
+    #    mode: layer3
+     #   description: "{{item.desc}}" 
+    #    admin_state: up
+        
+  #  - name: Set new loopbacks configs
+    #  with_items: "{{local_loopback}}"
+      #nxos_ip_interface:
+     #   state: present
+     #   interface: "{{item.name}}"
+     #   transport: nxapi
+     #   use_ssl: yes
+     #   validate_certs: no
+     #   port: 443
+     #   version: v4
+      #  addr: "{{item.ip_address}}"
+       # mask: "{{item.prefix}}"
