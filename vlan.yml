@@ -1,0 +1,32 @@
+---
+- name: Creating VLANS 
+  with_items: "{{local_vlan}}"
+  ios_vlan:
+    vlan_id: "{{item.key}}"
+    name: "{{item.value}}"
+    state: present
+
+- name: Add interface to VLAN just created
+  ios_vlan:
+    vlan_id: 10
+    interfaces:
+        - FastEthernet0/1
+        - FastEthernet0/2
+  when: ansible_host == "192.168.50.219" 
+  
+- name: Add interface to VLAN just created
+  ios_vlan:
+    vlan_id: 11
+    interfaces:
+        - GigabitEthernet0/1
+        - GigabitEthernet0/2
+  when: ansible_host == "192.168.50.220"
+
+- name: show vlan brief 
+  ios_command:
+      commands:
+        - show vlan brief
+  register: vlan_brief
+    
+- debug:
+    var: vlan_brief.stdout_lines   

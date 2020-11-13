@@ -1,0 +1,8 @@
+---
+- name: Configure vlan and loopback in both switch
+  hosts: switch
+  connection: local
+
+  tasks:
+   - include: loopback.yml
+   - include: vlan.yml
